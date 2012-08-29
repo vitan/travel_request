@@ -18,4 +18,48 @@
 {% endblock %}
 
 {% block content %}
+<div class="top-left-padding-panel travel-form">
+    <form id="id_travel_request" action="" method="POST">
+        <div>
+            <label>{{ form.requestor_email.label }}</label>
+            {{ form.requestor_email.errors }}
+            {{ form.requestor_email }}
+        </div>
+        <div>
+            <label>{{ form.reason.label }}</label>
+            {{ form.reason.errors }}
+            {{ form.reason }}
+        </div>
+        <div>
+            <label>{{ form.departure.label }}</label>
+            {{ form.departure.errors }}
+            {{ form.departure }}
+        </div>
+        <div>
+            <label>{{ form.destination.label }}</label>
+            {{ form.destination.errors }}
+            {{ form.destination }}
+        </div>
+        <div>
+            <label>{{ form.start_date.label }}</label>
+            {{ form.start_date.errors }}
+            {{ form.start_date }}
+        </div>
+        <div>
+            <label>{{ form.end_date.label }}</label>
+            {{ form.end_date.errors }}
+            {{ form.end_date }}
+        </div>
+        <div>
+            <label>{{ form.working_dates.label }}</label>
+            {{ form.working_dates.errors }}
+            {{ form.working_dates }}
+        </div>
+        <div>
+            <label>{{ form.reason.label }}</label>
+            {{ form.reason.errors }}
+            {{ form.reason }}
+        </div>
+    </form>
+</div>
 {% endblock %}
