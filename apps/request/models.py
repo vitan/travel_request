@@ -13,6 +13,6 @@ class Request(models.Model):
     destination = models.CharField(max_length=255)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    working_dates = models.PositiveIntegerField()
+    working_days = models.PositiveIntegerField()
     reason = models.TextField()
     status = models.PositiveSmallIntegerField(default=0, choices=NODE_STATUS)

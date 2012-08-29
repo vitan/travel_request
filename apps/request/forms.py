@@ -17,13 +17,13 @@ class RequestForm(forms.Form):
     )
     start_date = forms.DateField(
         label='start date',
-        widget=forms.DateInput({'class': 'vDateField', })
+        widget=forms.DateInput({'class': 'datepicker1', })
     )
     end_date = forms.DateField(
         label='end date',
-        widget=forms.DateInput({'class': 'vDateField', })
+        widget=forms.DateInput({'class': 'datepicker2', })
     )
-    working_dates = forms.IntegerField(
+    working_days = forms.IntegerField(
         label='total number of working days',
     )
     reason = forms.CharField(
