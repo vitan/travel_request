@@ -16,7 +16,7 @@
 			background:#eee; 
 			border-radius: 4px;
 			width: 220px;
-			padding: 9px 5px;			
+			padding: 9px 5px;"			
 		}
 		.block-element{
 			display: block;
@@ -32,68 +32,86 @@
 
 <div class="content">
 <div class="top-left-padding-panel travel-form">
-    <form id="id_travel_request" action="" method="POST">
-        {% csrf_token %}
-        <div>
-            <label>{{ form.requestor_email.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.requestor_email.errors }}
-            </span>
-            {{ form.requestor_email }}
-        </div>
-        <div>
-            <label>{{ form.manager_email.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.manager_email.errors }}
-            </span>
-            {{ form.manager_email }}
-        </div>
-        <div>
-            <label>{{ form.departure.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.departure.errors }}
-            </span>
-            {{ form.departure }}
-        </div>
-        <div>
-            <label>{{ form.destination.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.destination.errors }}
-            </span>
-            {{ form.destination }}
-        </div>
-        <div>
-            <label>{{ form.start_date.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.start_date.errors }}
-            </span>
-            {{ form.start_date }}
-        </div>
-        <div>
-            <label>{{ form.end_date.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.end_date.errors }}
-            </span>
-            {{ form.end_date }}
-        </div>
-        <div>
-            <label>{{ form.working_days.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.working_days.errors }}
-            </span>
-            {{ form.working_days }}
-        </div>
-        <div>
-            <label>{{ form.reason.label }}<span class='form-required'>*</span></label>
-            <span class='form-required'>
-                {{ form.reason.errors }}
-            </span>
-            {{ form.reason }}
-        </div>
-        <ul>
-            <input id="id_request" type="submit" name="request" value="Request" class="btn-primary"/>
-        </ul>
-    </form>
+<form id="id_travel_request" action="" method="POST">
+    {% csrf_token %}
+    <div>
+            <label>Your Email <span class="form-required">*</span></label>
+            <input type="text">
+    </div>
+    <div>
+            <label>Your Manager Email <span class="form-required">*</span></label>
+            <input type="text">
+    </div>
+    <div>
+            <label>Your Set Out Location <span class="form-required">*</span></label>
+            <select id="select-location">
+            <option selected="selected" value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
+            <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
+            <option value="RH - Brisbane">RH - Brisbane</option>
+            <option value="RH - Czech Republic">RH - Czech Republic</option>
+            <option value="RH - Israel">RH - Israel</option>
+            <option value="RH - Pune">RH - Pune</option>
+            <option value="RH - Raleigh (Centennial)" selected="selected">RH - Raleigh (Centennial)</option>
+            <option value="RH - Raleigh II (Venture III)">RH - Raleigh II (Venture III)</option>
+            <option value="RH - Shanghai">RH - Shanghai</option>
+            <option value="RH - Sweden">RH - Sweden</option>
+            <option value="RH - Westford">RH - Westford</option>
+            <option value="Others">Others</option>
+            </select> 
+            <img src="images/add.png" alt="add location" class="add-location" id="add-location1">
+            <div id="dialog-location" class="input-dialog">
+            <input id="select-input" type="text"  style="width: 200px;">
+            <p class="block-element"><span class="form-required">*</span>Please input your location here.</p>
+            <button id="location-btn" class="block-element btn-primary" >Done</button>
+            </div>	
+    </div>
+    <div>
+            <label>Your Destination Location <span class="form-required">*</span>
+            </label>
+            <select  name="offorloc" id="select-location2">
+            <option value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
+            <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
+            <option value="RH - Brisbane">RH - Brisbane</option>
+            <option value="RH - Czech Republic">RH - Czech Republic</option>
+            <option value="RH - Israel">RH - Israel</option>
+            <option value="RH - Pune">RH - Pune</option>
+            <option value="RH - Raleigh (Centennial)" selected="selected">RH - Raleigh (Centennial)</option>
+            <option value="RH - Raleigh II (Venture III)">RH - Raleigh II (Venture III)</option>
+            <option value="RH - Shanghai">RH - Shanghai</option>
+            <option value="RH - Sweden">RH - Sweden</option>
+            <option value="RH - Westford">RH - Westford</option>
+            <option value="Others">Others</option>
+            </select> 
+            <img src="images/add.png" alt="add location" class="add-location" id="add-location2">
+            <div id="dialog-location2" class="input-dialog">
+            <input id="select-input2" type="text"  style="width: 200px;">
+            <p class="block-element"><span class="form-required">*</span>Please input your location here.</p>
+            <button id="location-btn2" class="block-element btn-primary" >Done</button>
+    </div>
+    <div>
+            <label>Arrived Date <span class="form-required">*</span></label>
+            <input type="text"  id="datepicker1">
+    </div>
+    <div>
+            <label>Departure Date <span class="form-required">*</span></label>
+            <input type="text" id="datepicker2">
+    </div>
+    <div>
+            <label>Total Working Days <span class="form-required">*</span></label>
+            <input type="text">
+    </div>
+    <div>
+            <label>Business Reason for Travel<span class="form-required">*</span></label>
+            <textarea type="text"></textarea>
+    </div>
+    <input type="submit" name="request" value="Request"/>
+</form>
+</div>
+</div>
+</div>
+</div>
+      
+    
 <script>
 	$(function(){
 	//datepicker
@@ -128,5 +146,6 @@
 	})
 })
 </script>	
-</div>
-</div>
+	
+</body>
+</html>
