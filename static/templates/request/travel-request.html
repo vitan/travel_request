@@ -1,22 +1,36 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Travel Request</title>
+	 <style type="text/css">
+		.top-left-padding-panel{
+			padding: 18px 0 0 18px;
+		}
+		.form-required{
+			color: red;	
+		}
+		.input-dialog{
+			display: none; 
+			margin: 9px 0;
+			background:#eee; 
+			border-radius: 4px;
+			width: 220px;
+			padding: 9px 5px;			
+		}
+		.block-element{
+			display: block;
+		}
+		.travel-form textarea{
+			height: 100px;
+		}
+		.add-location{
+			margin-bottom: 9px;		
+		}
+	 </style>
+</head>
 
-{% block title %}Travel Request{% endblock %}
-{% block extrahead %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="snow zhang" >
-    <link href="{{ STATIC_URL }}media/css/project.css" rel="stylesheet" type="text/css" />
-    <script src="{{ STATIC_URL }}media/js/chosen.js"></script>  
-    <script src="{{ STATIC_URL }}media/js/dropdown.js"></script>
-    <script src="{{ STATIC_URL }}media/js/scrollspy.js"></script>
-    <script src="{{ STATIC_URL }}media/js/modal.js"></script>
-    <script src="{{ STATIC_URL }}media/js/tab.js"></script>
-    <script src="{{ STATIC_URL }}media/js/tooltip.js"></script>
-    <script src="{{ STATIC_URL }}media/js/typeahead.js"></script>
-    <script src="{{ STATIC_URL }}media/js/project.js"></script> 
-{% endblock %}
-
-{% block content %}
+<div class="content">
 <div class="top-left-padding-panel travel-form">
     <form id="id_travel_request" action="" method="POST">
         {% csrf_token %}
@@ -80,5 +94,39 @@
             <input id="id_request" type="submit" name="request" value="Request" class="btn-primary"/>
         </ul>
     </form>
+<script>
+	$(function(){
+	//datepicker
+	$(function() {
+	$( "#datepicker1,#datepicker2,#datepicker3" ).datepicker({dateFormat:"DD,d,MM,yy"});
+	});
+	//select the option(Others) show the input panel
+	$("#select-location").change(function(){
+		if($("#select-location option:selected").text()=='Others')
+			$("#dialog-location").show();	 
+	})
+	$("#select-location2").change(function(){
+		if($("#select-location2 option:selected").text()=='Others')
+			$("#dialog-location2").show();	 
+	})
+	$("#add-location1").click(function(){		
+			$("#dialog-location").show();	 
+	})
+	$("#add-location2").click(function(){		
+			$("#dialog-location2").show();	 
+	})
+	//add the input text to select
+	$("#location-btn").click(function(){	
+			var value=$("#select-input").val();
+   $("#select-location").append("<option selected="+"selected"+">"+value+"</option>");
+	$("#dialog-location").hide(); 
+	})
+	$("#location-btn2").click(function(){	
+			var value=$("#select-input2").val();
+   $("#select-location2").append("<option selected="+"selected"+">"+value+"</option>");
+	$("#dialog-location2").hide(); 
+	})
+})
+</script>	
 </div>
-{% endblock %}
+</div>
