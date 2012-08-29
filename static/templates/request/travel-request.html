@@ -6,7 +6,6 @@
     <meta name="description" content="">
     <meta name="author" content="snow zhang" >
     <link href="{{ STATIC_URL }}media/css/project.css" rel="stylesheet" type="text/css" />
-    <script src="{{ STATIC_URL }}media/js/common.js"></script>
     <script src="{{ STATIC_URL }}media/js/chosen.js"></script>  
     <script src="{{ STATIC_URL }}media/js/dropdown.js"></script>
     <script src="{{ STATIC_URL }}media/js/scrollspy.js"></script>
@@ -20,46 +19,66 @@
 {% block content %}
 <div class="top-left-padding-panel travel-form">
     <form id="id_travel_request" action="" method="POST">
+        {% csrf_token %}
         <div>
-            <label>{{ form.requestor_email.label }}</label>
-            {{ form.requestor_email.errors }}
+            <label>{{ form.requestor_email.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.requestor_email.errors }}
+            </span>
             {{ form.requestor_email }}
         </div>
         <div>
-            <label>{{ form.reason.label }}</label>
-            {{ form.reason.errors }}
-            {{ form.reason }}
+            <label>{{ form.manager_email.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.manager_email.errors }}
+            </span>
+            {{ form.manager_email }}
         </div>
         <div>
-            <label>{{ form.departure.label }}</label>
-            {{ form.departure.errors }}
+            <label>{{ form.departure.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.departure.errors }}
+            </span>
             {{ form.departure }}
         </div>
         <div>
-            <label>{{ form.destination.label }}</label>
-            {{ form.destination.errors }}
+            <label>{{ form.destination.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.destination.errors }}
+            </span>
             {{ form.destination }}
         </div>
         <div>
-            <label>{{ form.start_date.label }}</label>
-            {{ form.start_date.errors }}
+            <label>{{ form.start_date.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.start_date.errors }}
+            </span>
             {{ form.start_date }}
         </div>
         <div>
-            <label>{{ form.end_date.label }}</label>
-            {{ form.end_date.errors }}
+            <label>{{ form.end_date.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.end_date.errors }}
+            </span>
             {{ form.end_date }}
         </div>
         <div>
-            <label>{{ form.working_dates.label }}</label>
-            {{ form.working_dates.errors }}
+            <label>{{ form.working_dates.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.working_dates.errors }}
+            </span>
             {{ form.working_dates }}
         </div>
         <div>
-            <label>{{ form.reason.label }}</label>
-            {{ form.reason.errors }}
+            <label>{{ form.reason.label }}<span class='form-required'>*</span></label>
+            <span class='form-required'>
+                {{ form.reason.errors }}
+            </span>
             {{ form.reason }}
         </div>
+        <ul>
+            <input id="id_request" type="submit" name="request" value="Request" class="btn-primary"/>
+        </ul>
     </form>
 </div>
 {% endblock %}

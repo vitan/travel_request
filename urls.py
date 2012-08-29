@@ -8,7 +8,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'travel_request.views.home', name='home'),
-    url(r'^$', redirect_to, {'url', '/travel_request/'}),
     url(r'^travel_request/', 'travel_request.apps.request.views.travel_request', name='travel_request'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -6,8 +6,8 @@ STATUS_OPTIONS = ('Processing', 'Approved', 'Postpone', 'Reject')
 NODE_STATUS = list(enumerate(STATUS_OPTIONS))
 
 class Request(models.Model):
-    requestor = models.ForeignKey(User)
-    manager = models.ForeignKey(User)
+    requestor = models.ForeignKey(User, related_name="requ_requestset")
+    manager = models.ForeignKey(User, related_name="mana_requestset")
     #ccs = models.ForeignKey(User)
     departure = models.CharField(max_length=255)
     destination = models.CharField(max_length=255)

@@ -11,16 +11,11 @@
     <link href="{{ STATIC_URL }}media/css/eso-theme.css" rel="stylesheet">
     {% block extrastyle %}{% endblock %}
     {% block extrahead %}{% endblock %}
-
-    <script type="text/javascript">
-        window.__admin_media_prefix__ = "{% filter escapejs %}{% admin_media_prefix %}{% endfilter %}";
-    </script>
 </head>
 <body>
 <!-- Whole -->
 
-<div class="container eso-inner">
-<div class="container content clearfix">
+<div class="content">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
         {% block content %}

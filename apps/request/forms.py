@@ -26,6 +26,7 @@ class RequestForm(forms.Form):
     working_dates = forms.IntegerField(
         label='total number of working days',
     )
-    reason = forms.TextField(
+    reason = forms.CharField(
         label='bussiness reason for travel',
+        widget=forms.Textarea,
     )
