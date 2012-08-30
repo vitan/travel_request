@@ -9,7 +9,6 @@ NODE_STATUS = list(enumerate(STATUS_OPTIONS))
 class Request(models.Model):
     requestor = models.ForeignKey(User, related_name="requ_requestset")
     manager = models.ForeignKey(User, related_name="mana_requestset")
-    #ccs = models.ForeignKey(User)
     departure = models.CharField(max_length=255)
     destination = models.CharField(max_length=255)
     start_date = models.DateTimeField()
@@ -19,13 +18,13 @@ class Request(models.Model):
     status = models.PositiveSmallIntegerField(default=0, choices=NODE_STATUS)
     md5 = models.CharField(max_length=32) 
 
+    def __unicode__(self):
+        return "%s requested by %s" % (self.requestor.username,
+                                       self.manager.username)
+
 class RequestMailConfig(models.Model):
     user = models.OneToOneField(User)
 
-   # request_send = models.CharField(max_length=255, null=True, blank=True)
-   # request_cc   = models.CharField(max_length=255, null=True, blank=True)
-   # feedback_send= models.CharField(max_length=255, null=True, blank=True)
-   # feedback_cc  = models.CharField(max_length=255, null=True, blank=True)
     request_send = models.ManyToManyField(User, blank=True, related_name="requ_sendset")
     request_cc   = models.ManyToManyField(User, blank=True, related_name="requ_ccset")
     feedback_send= models.ManyToManyField(User, blank=True, related_name="feed_sendset")
