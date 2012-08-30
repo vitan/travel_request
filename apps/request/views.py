@@ -10,6 +10,7 @@ from datetime import datetime
 
 from travel_request.apps.request.models import Request, NODE_STATUS
 
+DATETIME_FORMAT = '%Y-%m-%d'
 def travel_request(request, template_name='request/travel-request.html'):
     """
     display the travel_request form
@@ -42,7 +43,13 @@ def travel_request(request, template_name='request/travel-request.html'):
                     %(record.manager.username, str(datetime.now()), record.requestor.email)
             return HttpResponse(success_html)
         else:
-            pass
+            fail_html = "<html>\
+                    <head><title>Form Error</title></head>\
+                    <body>Please make sure you've filled in all required fields\
+                    and all the fields in a correct form!<p>\
+                    Please press Back and try again!</body>\
+                    </html>"
+            return HttpResponse(fail_html)
 
     return render_to_response(template_name,
                               context_instance=RequestContext(request))
@@ -65,6 +72,17 @@ def feedback(request, feedback_md5):
         raise Http404
 
 def is_valid(form):
+    """
+    verify the form's validation
+    """
+    for value in form.values():
+        if not value:
+            return False
+
+    start = datetime.strptime(form[u'start_date'], DATETIME_FORMAT)
+    end   = datetime.strptime(form[u'end_date'], DATETIME_FORMAT)
+    if start > end:
+        return False
     return True
 
 def send_request(record, host):
