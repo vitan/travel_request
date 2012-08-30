@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 # Add more options if necessary
 STATUS_OPTIONS = ('Processing', 'Approved', 'Postpone', 'Reject', 'Cancelled')
@@ -17,3 +18,23 @@ class Request(models.Model):
     reason = models.TextField()
     status = models.PositiveSmallIntegerField(default=0, choices=NODE_STATUS)
     md5 = models.CharField(max_length=32) 
+
+class RequestMailConfig(models.Model):
+    user = models.OneToOneField(User)
+
+   # request_send = models.CharField(max_length=255, null=True, blank=True)
+   # request_cc   = models.CharField(max_length=255, null=True, blank=True)
+   # feedback_send= models.CharField(max_length=255, null=True, blank=True)
+   # feedback_cc  = models.CharField(max_length=255, null=True, blank=True)
+    request_send = models.ManyToManyField(User, blank=True, related_name="requ_sendset")
+    request_cc   = models.ManyToManyField(User, blank=True, related_name="requ_ccset")
+    feedback_send= models.ManyToManyField(User, blank=True, related_name="feed_sendset")
+    feedback_cc  = models.ManyToManyField(User, blank=True, related_name="feed_ccset")
+    
+    def __str__(self):
+        return "%s's travel-request mail config" % self.user
+
+    def create_mail_config(sender, instance, created, **kwargs):
+        if created:
+            mail_config, created = RequestMailConfig.objects.get_or_create(user=instance)
+    post_save.connect(create_mail_config, sender=User)

@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'travel_request.apps.request',
 )
+AUTH_RPOFILE_MODULE = 'request.RequestMailConfig'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
