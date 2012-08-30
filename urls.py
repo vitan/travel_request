@@ -5,10 +5,13 @@ from django.views.generic.simple import redirect_to
 from django.contrib import admin
 admin.autodiscover()
 
+from travel_request.apps.request.views import travel_request, feedback
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'travel_request.views.home', name='home'),
-    url(r'^travel_request/', 'travel_request.apps.request.views.travel_request', name='travel_request'),
+    url(r'^travel_request/$', travel_request, name='travel_request'),
+    url(r'^travel_request/feedback/([a-z\d]{32})/$', feedback, name='feedback'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

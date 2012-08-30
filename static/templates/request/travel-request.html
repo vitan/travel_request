@@ -36,15 +36,15 @@
     {% csrf_token %}
     <div>
             <label>Your Email <span class="form-required">*</span></label>
-            <input type="text">
+            <input type="text" name="requestor_email" id="id_requestor_email">
     </div>
     <div>
             <label>Your Manager Email <span class="form-required">*</span></label>
-            <input type="text">
+            <input type="text" name="manager_email" id="id_manager_email">
     </div>
     <div>
             <label>Your Set Out Location <span class="form-required">*</span></label>
-            <select id="select-location">
+            <select id="id_departure" name="departure">
             <option selected="selected" value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
             <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
             <option value="RH - Brisbane">RH - Brisbane</option>
@@ -68,7 +68,7 @@
     <div>
             <label>Your Destination Location <span class="form-required">*</span>
             </label>
-            <select  name="offorloc" id="select-location2">
+            <select  name="destination" id="id_destination">
             <option value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
             <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
             <option value="RH - Brisbane">RH - Brisbane</option>
@@ -90,19 +90,19 @@
     </div>
     <div>
             <label>Arrived Date <span class="form-required">*</span></label>
-            <input type="text"  id="datepicker1">
+            <input type="text" name="start_date" id="id_start_date">
     </div>
     <div>
             <label>Departure Date <span class="form-required">*</span></label>
-            <input type="text" id="datepicker2">
+            <input type="text" name="end_date" id="id_end_date">
     </div>
     <div>
             <label>Total Working Days <span class="form-required">*</span></label>
-            <input type="text">
+            <input type="text" name="working_days" id="id_working_days">
     </div>
     <div>
             <label>Business Reason for Travel<span class="form-required">*</span></label>
-            <textarea type="text"></textarea>
+            <textarea type="text" name="reason" id="id_reason"></textarea>
     </div>
     <input type="submit" name="request" value="Request"/>
 </form>
