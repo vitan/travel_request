@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'travel_request.views.home', name='home'),
     url(r'^travel_request/$', travel_request, name='travel_request'),
-    url(r'^travel_request/feedback/([a-z\d]{32})/$', feedback, name='feedback'),
+    url(r'^travel_request/feedback/(\d{1})/([a-z\d]{32})/$', feedback, name='feedback'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

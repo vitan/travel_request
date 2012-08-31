@@ -6,10 +6,13 @@ class RequestAdmin(admin.ModelAdmin):
                     'manager',
                     'departure',
                     'destination',
+                    'start_date',
+                    'end_date',
                     'working_days',
                     'status')
     list_display_links = ('requestor',)
     readonly_fields = ('md5',)
+
 admin.site.register(Request, RequestAdmin)
 
 admin.site.register(RequestMailConfig)

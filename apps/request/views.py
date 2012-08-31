@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from hashlib import md5
 from datetime import datetime
 
-from travel_request.apps.request.models import Request, NODE_STATUS
+from travel_request.apps.request.models import Request,RequestMailConfig, NODE_STATUS
 
 DATETIME_FORMAT = '%Y-%m-%d'
 def travel_request(request, template_name='request/travel-request.html'):
@@ -37,7 +37,7 @@ def travel_request(request, template_name='request/travel-request.html'):
             #FIXME maybe need transaction
             success_html = "<html>\
                     <head><title>Request Success</title></head>\
-                    <body>The request has been sent to %s at %s<p>\
+                    <body>The request has been sent to %s at %s, Be processing<p>\
                     Check feedback at %s</body>\
                     </html>"\
                     %(record.manager.username, str(datetime.now()), record.requestor.email)
@@ -54,19 +54,19 @@ def travel_request(request, template_name='request/travel-request.html'):
     return render_to_response(template_name,
                               context_instance=RequestContext(request))
 
-def feedback(request, feedback_md5):
+def feedback(request, status, feedback_md5):
     """
     manager feedback the request url
     """
     try:
         q = Request.objects.get(md5=feedback_md5, status='0')
-        q.status = '1'
+        q.status = status
         q.save()
         html = "<html>\
                 <head><title>Request Feedback</title></head>\
-                <body>%s at %s approved the request</body>\
+                <body>%s at %s %s the request</body>\
                 </html>"\
-                %(q.manager.username, str(datetime.now()))
+                %(q.manager.username, str(datetime.now()), dict(NODE_STATUS)[int(status)])
         return HttpResponse(html)
     except ObjectDoesNotExist:
         raise Http404
@@ -86,22 +86,24 @@ def is_valid(form):
     return True
 
 def send_request(record, host):
-    message = "Travel Request\n\
-              From: %s\n\
-              Start: %s To: %s\n\
-              Working off days: %s\n\
-              Reason: %s\n\
-              To Approve the Request by url:%sfeedback/%s"\
-              %(record.requestor.username,
-                record.start_date,
-                record.end_date,
-                record.working_days,
-                record.reason,
-                host, record.md5)
+    feedback_urls = []
+    for status, descri in NODE_STATUS:
+        feedback_urls.append("To %s the Request press url:%sfeedback/%s/%s\n"\
+                             %(descri, host,status, record.md5))
        
+    message = "Travel Request\n\
+            From: %s\n\
+            Start: %s To: %s\n\
+            Working off days: %s\n\
+            Reason: %s\n\n"\
+            %(record.requestor.username,
+            record.start_date,
+            record.end_date,
+            record.working_days,
+            record.reason) + '\n'.join(feedback_urls)
+    
     send_mail('Travel Request',
               message,
               record.requestor.email,
               [record.manager.email],
               fail_silently = False)
-
