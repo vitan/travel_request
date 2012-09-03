@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from datetime import datetime
 
 # Add more options if necessary
-STATUS_OPTIONS = ('Processing', 'Approved', 'Postponed', 'Rejected', 'Cancelled')
+STATUS_OPTIONS = ('Processing', 'Approved', 'Postponed', 'Rejected')
 NODE_STATUS = list(enumerate(STATUS_OPTIONS))
 
 class Request(models.Model):
