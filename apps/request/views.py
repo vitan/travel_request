@@ -38,7 +38,6 @@ def travel_request(request, template_name='request/travel-request.html'):
 
             send_request(record, host)
 
-            #FIXME maybe need transaction
             title = "Request Success"
             body  = "your request has been sent to %s at %s<p>\
                     Please check feedback at %s"\
@@ -49,7 +48,7 @@ def travel_request(request, template_name='request/travel-request.html'):
             title = "Form Error"
             body  = "Please make sure you've filled in all required fields\
                     and all the fields in a correct form!<p>\
-                    Please press <a href=%s>Back</a> and try again!" % host
+                    Please press <a href='javascript:history.go(-1)'>Back</a> and try again!"
         
         html = HTML_TEMPLATE % (title, body)
         return HttpResponse(html)
