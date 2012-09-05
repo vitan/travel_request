@@ -3,149 +3,130 @@
 <head>
     <meta charset="utf-8">
     <title>Travel Request</title>
-	 <style type="text/css">
-		.top-left-padding-panel{
-			padding: 18px 0 0 18px;
-		}
-		.form-required{
-			color: red;	
-		}
-		.input-dialog{
-			display: none; 
-			margin: 9px 0;
-			background:#eee; 
-			border-radius: 4px;
-			width: 220px;
-			padding: 9px 5px;			
-		}
-		.block-element{
-			display: block;
-		}
-		.travel-form textarea{
-			height: 100px;
-		}
-		.add-location{
-			margin-bottom: 9px;		
-		}
-	 </style>
+    <style type="text/css">
+        .top-left-padding-panel{
+            padding: 18px 0 0 18px;
+        }
+        .form-required{
+            color: red;	
+        }
+        .input-dialog{
+            display: none;
+            margin: 9px 0;
+            background:#eee; 
+            border-radius: 4px;
+            width: 220px;
+            padding: 9px 5px;			
+        }
+        .block-element{
+            display: block;
+        }
+        .travel-form textarea{
+            height: 100px;
+        }
+        .add-location{
+            margin-bottom: 9px;		
+        }
+    </style>
+    <script type="text/javascript">
+        function ValidateEmail(id){
+            var mailformat = /^\w+([\.-]?\w+)*@redhat\.com$/;
+            var input = document.getElementById(id);
+            if(input.value.match(mailformat)){
+                document.getElementById(id+'_warn').style.display="none";
+            }
+            else{
+                document.getElementById(id+'_warn').style.display="block";
+                input.focus();
+            }
+        }
+        function OthersEvent(id){
+            document.getElementById(id+'_other').value="other place";
+            var select = document.getElementById(id);
+            if(select.options[select.selectedIndex].text == 'Others'){
+                document.getElementById(id+'_other').style.display="block";
+            }
+            else{
+                document.getElementById(id+'_other').style.display="none";
+            }
+        }
+        function Redmine(input){
+            if(input.value == "other place"){
+                input.value = "";
+            }
+        }
+    </script>
 </head>
 
+<body>
 <div class="content">
-<div class="top-left-padding-panel travel-form">
-<form id="id_travel_request" action="" method="POST">
-    {% csrf_token %}
-    <div>
-            <label>Your Email <span class="form-required">*</span></label>
-            <input type="text" name="requestor_email" id="id_requestor_email">
+    <div class="top-left-padding-panel travel-form">
+        <form id="id_travel_request" name="form" action="http://10.66.3.221:8000/travel_request/" method="POST">
+            <div>
+                <label>Your Email <span class="form-required">*</span></label>
+                <input type="text" name="requestor_email" id="id_requestor_email" onChange="ValidateEmail(this.id)">
+                <span class="form-required" id="id_requestor_email_warn" style="display:none">invalid email address! example: example@redhat.com</span>
+            </div>
+            <div>
+                <label>Your Manager Email <span class="form-required">*</span></label>
+                <input type="text" name="manager_email" id="id_manager_email" onChange="ValidateEmail(this.id)">
+                <span class="form-required" id="id_manager_email_warn" style="display:none">invalid email address! example: example@redhat.com</span>
+            </div>
+            <div>
+                <label>Your Set Out Location <span class="form-required">*</span></label>
+                <select id="id_departure" name="departure" onChange="OthersEvent(this.id)">
+                    <option selected="selected" value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
+                    <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
+                    <option value="RH - Brisbane">RH - Brisbane</option>
+                    <option value="RH - Czech Republic">RH - Czech Republic</option>
+                    <option value="RH - Israel">RH - Israel</option>
+                    <option value="RH - Pune">RH - Pune</option>
+                    <option value="RH - Raleigh (Centennial)">RH - Raleigh (Centennial)</option>
+                    <option value="RH - Raleigh II (Venture III)">RH - Raleigh II (Venture III)</option>
+                    <option value="RH - Shanghai">RH - Shanghai</option>
+                    <option value="RH - Sweden">RH - Sweden</option>
+                    <option value="RH - Westford">RH - Westford</option>
+                    <option value="Others">Others</option>
+                </select> 
+                <input id="id_departure_other" name="departure_Other" type="text" class="input-dialog" value="other place"  style="width: 200px;" onclick="Redmine(this)"/>
+            </div>
+            <div>
+                <label>Your Destination Location <span class="form-required">*</span></label>
+                <select  name="destination" id="id_destination" onChange="OthersEvent(this.id)">
+                    <option value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
+                    <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
+                    <option value="RH - Brisbane">RH - Brisbane</option>
+                    <option value="RH - Czech Republic">RH - Czech Republic</option>
+                    <option value="RH - Israel">RH - Israel</option>
+                    <option value="RH - Pune">RH - Pune</option>
+                    <option value="RH - Raleigh (Centennial)">RH - Raleigh (Centennial)</option>
+                    <option value="RH - Raleigh II (Venture III)">RH - Raleigh II (Venture III)</option>
+                    <option value="RH - Shanghai">RH - Shanghai</option>
+                    <option value="RH - Sweden">RH - Sweden</option>
+                    <option value="RH - Westford">RH - Westford</option>
+                    <option value="Others">Others</option>
+                </select> 
+                <input id="id_destination_other" type="text" name="destination_Other" class="input-dialog" value="other place" style="width: 200px;" onclick="Redmine(this)"/>
+            </div>
+            <div>
+                <label>Arrived Date <span class="form-required">*</span></label>
+                <input type="text" name="start_date" id="datepicker">
+            </div>
+            <div>
+                <label>Departure Date <span class="form-required">*</span></label>
+                <input type="text" name="end_date" id="datepicker">
+            </div>
+            <div>
+                <label>Total Working Days <span class="form-required">*</span></label>
+                <input type="text" name="working_days" id="id_working_days">
+            </div>
+            <div>
+                <label>Business Reason for Travel<span class="form-required">*</span></label>
+                <textarea type="text" name="reason" id="id_reason"></textarea>
+            </div>
+            <input type="submit" name="request" value="Submit the Request"/>
+        </form>
     </div>
-    <div>
-            <label>Your Manager Email <span class="form-required">*</span></label>
-            <input type="text" name="manager_email" id="id_manager_email">
-    </div>
-    <div>
-            <label>Your Set Out Location <span class="form-required">*</span></label>
-            <select id="id_departure" name="departure">
-            <option selected="selected" value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
-            <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
-            <option value="RH - Brisbane">RH - Brisbane</option>
-            <option value="RH - Czech Republic">RH - Czech Republic</option>
-            <option value="RH - Israel">RH - Israel</option>
-            <option value="RH - Pune">RH - Pune</option>
-            <option value="RH - Raleigh (Centennial)" selected="selected">RH - Raleigh (Centennial)</option>
-            <option value="RH - Raleigh II (Venture III)">RH - Raleigh II (Venture III)</option>
-            <option value="RH - Shanghai">RH - Shanghai</option>
-            <option value="RH - Sweden">RH - Sweden</option>
-            <option value="RH - Westford">RH - Westford</option>
-            <option value="Others">Others</option>
-            </select> 
-            <img src="images/add.png" alt="add location" class="add-location" id="add-location1">
-            <div id="dialog-location" class="input-dialog">
-            <input id="select-input" type="text"  style="width: 200px;">
-            <p class="block-element"><span class="form-required">*</span>Please input your location here.</p>
-            <button id="location-btn" class="block-element btn-primary" >Done</button>
-            </div>	
-    </div>
-    <div>
-            <label>Your Destination Location <span class="form-required">*</span>
-            </label>
-            <select  name="destination" id="id_destination">
-            <option value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
-            <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
-            <option value="RH - Brisbane">RH - Brisbane</option>
-            <option value="RH - Czech Republic">RH - Czech Republic</option>
-            <option value="RH - Israel">RH - Israel</option>
-            <option value="RH - Pune">RH - Pune</option>
-            <option value="RH - Raleigh (Centennial)" selected="selected">RH - Raleigh (Centennial)</option>
-            <option value="RH - Raleigh II (Venture III)">RH - Raleigh II (Venture III)</option>
-            <option value="RH - Shanghai">RH - Shanghai</option>
-            <option value="RH - Sweden">RH - Sweden</option>
-            <option value="RH - Westford">RH - Westford</option>
-            <option value="Others">Others</option>
-            </select> 
-            <img src="images/add.png" alt="add location" class="add-location" id="add-location2">
-            <div id="dialog-location2" class="input-dialog">
-            <input id="select-input2" type="text"  style="width: 200px;">
-            <p class="block-element"><span class="form-required">*</span>Please input your location here.</p>
-            <button id="location-btn2" class="block-element btn-primary" >Done</button>
-    </div>
-    <div>
-            <label>Arrived Date <span class="form-required">*</span></label>
-            <input type="text" name="start_date" id="id_start_date">
-    </div>
-    <div>
-            <label>Departure Date <span class="form-required">*</span></label>
-            <input type="text" name="end_date" id="id_end_date">
-    </div>
-    <div>
-            <label>Total Working Days <span class="form-required">*</span></label>
-            <input type="text" name="working_days" id="id_working_days">
-    </div>
-    <div>
-            <label>Business Reason for Travel<span class="form-required">*</span></label>
-            <textarea type="text" name="reason" id="id_reason"></textarea>
-    </div>
-    <input type="submit" name="request" value="Request"/>
-</form>
 </div>
-</div>
-</div>
-</div>
-      
-    
-<script>
-	$(function(){
-	//datepicker
-	$(function() {
-	$( "#datepicker1,#datepicker2,#datepicker3" ).datepicker({dateFormat:"DD,d,MM,yy"});
-	});
-	//select the option(Others) show the input panel
-	$("#select-location").change(function(){
-		if($("#select-location option:selected").text()=='Others')
-			$("#dialog-location").show();	 
-	})
-	$("#select-location2").change(function(){
-		if($("#select-location2 option:selected").text()=='Others')
-			$("#dialog-location2").show();	 
-	})
-	$("#add-location1").click(function(){		
-			$("#dialog-location").show();	 
-	})
-	$("#add-location2").click(function(){		
-			$("#dialog-location2").show();	 
-	})
-	//add the input text to select
-	$("#location-btn").click(function(){	
-			var value=$("#select-input").val();
-   $("#select-location").append("<option selected="+"selected"+">"+value+"</option>");
-	$("#dialog-location").hide(); 
-	})
-	$("#location-btn2").click(function(){	
-			var value=$("#select-input2").val();
-   $("#select-location2").append("<option selected="+"selected"+">"+value+"</option>");
-	$("#dialog-location2").hide(); 
-	})
-})
-</script>	
-	
 </body>
 </html>
