@@ -13,6 +13,12 @@ class RequestAdmin(admin.ModelAdmin):
                     'update_date'
                    )
     readonly_fields = ('md5',)
+    list_filter = ('start_date',
+                   'end_date',
+                   'status',
+                   'working_days',
+                   'update_date',)
+    list_editable = ('status',)
 
 admin.site.register(Request, RequestAdmin)
 
