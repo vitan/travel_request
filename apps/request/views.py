@@ -65,6 +65,7 @@ def feedback(request, status, feedback_md5):
     try:
         q = Request.objects.get(md5=feedback_md5, status='0')
         q.status = status
+        q.update_date = datetime.now()
         q.save()
         html_title = "Request Feedback"
         html_body  ="%s at %s <font style='color:red'>%s</font> the following request"\
@@ -87,7 +88,7 @@ def feedback(request, status, feedback_md5):
         tos.append(q.requestor_email)
 
         msg = EmailMultiAlternatives(subject=html_title,
-                           from_email=q.manager_email,
+                           from_email="hosted-no-reply@redhat.com",
                            to=tos,
                            cc=ccs,
                            headers={'Cc': ','.join(ccs)})
