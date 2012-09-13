@@ -13,6 +13,12 @@ class RequestAdmin(admin.ModelAdmin):
                     'update_date'
                    )
     readonly_fields = ('md5',)
+    search_fields  = ['requestor_email',
+                      'manager_email',
+                      'departure',
+                      'destination',
+                      'working_days',]
+    ordering = ['-update_date', 'start_date', 'status']
     list_filter = ('start_date',
                    'end_date',
                    'status',
