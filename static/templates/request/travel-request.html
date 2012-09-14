@@ -61,19 +61,22 @@
 <body>
 <div class="content">
     <div class="top-left-padding-panel travel-form">
-        <form id="id_travel_request" name="form" action="http://10.66.3.221:8000/travel_request/" method="POST">
-            <div>
-                <label>Your Email <span class="form-required">*</span></label>
+         <form id="id_travel_request" name="form" action="http://10.66.3.221:8000/travel_request/" method="POST">
+            <p>
+                Your Email <span class="form-required">*</span>
+                <br>
                 <input type="text" name="requestor_email" id="id_requestor_email" onChange="ValidateEmail(this.id)">
                 <span class="form-required" id="id_requestor_email_warn" style="display:none">invalid email address! example: example@redhat.com</span>
-            </div>
-            <div>
-                <label>Your Manager Email <span class="form-required">*</span></label>
+            </p>
+            <p>
+                Your Manager Email <span class="form-required">*</span>
+                <br>
                 <input type="text" name="manager_email" id="id_manager_email" onChange="ValidateEmail(this.id)">
                 <span class="form-required" id="id_manager_email_warn" style="display:none">invalid email address! example: example@redhat.com</span>
-            </div>
-            <div>
-                <label>Your Set Out Location <span class="form-required">*</span></label>
+            </p>
+            <p>
+                Your Set Out Location <span class="form-required">*</span>
+                 <br>
                 <select id="id_departure" name="departure" onChange="OthersEvent(this.id)">
                     <option selected="selected" value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
                     <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
@@ -87,11 +90,12 @@
                     <option value="RH - Sweden">RH - Sweden</option>
                     <option value="RH - Westford">RH - Westford</option>
                     <option value="Others">Others</option>
-                </select> 
+                </select>
                 <input id="id_departure_other" name="departure_Other" type="text" class="input-dialog" value="other place"  style="width: 200px;" onclick="Redmine(this)"/>
-            </div>
-            <div>
-                <label>Your Destination Location <span class="form-required">*</span></label>
+            </p>
+            <p>
+                Your Destination Location <span class="form-required">*</span>
+                 <br>
                 <select  name="destination" id="id_destination" onChange="OthersEvent(this.id)">
                     <option value="RH - Beijing (Prosper Center)">RH - Beijing (Prosper Center)</option>
                     <option value="RH - Beijing (Raycom)">RH - Beijing (Raycom)</option>
@@ -107,24 +111,30 @@
                     <option value="Others">Others</option>
                 </select> 
                 <input id="id_destination_other" type="text" name="destination_Other" class="input-dialog" value="other place" style="width: 200px;" onclick="Redmine(this)"/>
-            </div>
-            <div>
-                <label>Arrived Date <span class="form-required">*</span></label>
+            </p>
+            <p>
+                Arrived Date <span class="form-required">*</span>
+                <br>
                 <input type="text" name="start_date" id="datepicker">
-            </div>
-            <div>
-                <label>Departure Date <span class="form-required">*</span></label>
+            </p>
+            <p>
+                Departure Date <span class="form-required">*</span>
+                <br>
                 <input type="text" name="end_date" id="datepicker">
-            </div>
-            <div>
-                <label>Total Working Days <span class="form-required">*</span></label>
+            </p>
+            <p>
+                Total Working Days <span class="form-required">*</span>
+                <br>
                 <input type="text" name="working_days" id="id_working_days">
-            </div>
-            <div>
-                <label>Business Reason for Travel<span class="form-required">*</span></label>
+            </p>
+            <p>
+                Business Reason for Travel<span class="form-required">*</span>
+                <br>
                 <textarea type="text" name="reason" id="id_reason"></textarea>
-            </div>
-            <input type="submit" name="request" value="Submit the Request"/>
+            </p>
+            <p>
+                <input type="submit" name="request" value="Submit the Request"/>
+            </p>
         </form>
     </div>
 </div>
