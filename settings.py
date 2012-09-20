@@ -1,8 +1,18 @@
 # Django settings for travel_request project.
 import os
+import socket
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+try:
+    #HOSTNAME = socket.gethostname()
+    if DEBUG:
+        HOSTNAME = 'http://10.66.3.221:8000/travel_request/'
+    else:
+        HOSTNAME = socket.gethostname()
+except:
+    HOSTNAME = "localhost"
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 

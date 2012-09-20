@@ -4,9 +4,11 @@ from django.http import HttpResponse, Http404
 from django.template import RequestContext
 from django.core.mail import EmailMultiAlternatives
 from django.core.exceptions import ObjectDoesNotExist
+
 from hashlib import md5
 from datetime import datetime
 
+from settings import HOSTNAME
 from travel_request.apps.request.models import Request, MailConfig, ACTION, DATETIME_FORMAT
 
 HTML_TEMPLATE = "<html><head><title>%s</title></head><body>%s</body></html>"
@@ -17,8 +19,6 @@ def travel_request(request, template_name='request/travel-request.html'):
     """
     if request.method == 'POST':
         form  = request.POST
-        #host  = request.META.get('HTTP_REFERER', None) or '/'
-        host  = 'http://10.66.3.221:8000/travel_request/'
         title = ""
         body  = ""
         if is_valid(form):
@@ -35,7 +35,7 @@ def travel_request(request, template_name='request/travel-request.html'):
 
             record.save()             
 
-            send_request(record, host)
+            send_request(record, HOSTNAME)
 
             title = "Request Success"
             body  = "your request has been sent to %s at %s<p>\
