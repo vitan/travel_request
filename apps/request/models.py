@@ -60,15 +60,14 @@ def feedback_handler(sender, **kwargs):
                   obj.working_days,
                   obj.reason)
 
-        #FIXME the manager should be only one? so tos is to
         tos = [entry.email for entry in MailConfig.objects.filter(is_cc=False)]
         ccs = [entry.email for entry in MailConfig.objects.filter(is_cc=True)]
         tos.append(obj.requestor_email)
+        tos.append(obj.manager_email)
 
         msg = EmailMultiAlternatives(subject=subject,
                                      from_email="hosted-no-reply@redhat.com",
                                      to=tos,
-                                     cc=ccs,
                                      headers={'Cc': ','.join(ccs)})
         
         msg.attach_alternative(email_body, "text/html")

@@ -85,8 +85,11 @@ def is_valid(form):
     if not all(form.values()):
         return False
 
-    start = datetime.strptime(form[u'start_date'], DATETIME_FORMAT[:8])
-    end   = datetime.strptime(form[u'end_date'], DATETIME_FORMAT[:8])
+    try:
+        start = datetime.strptime(form[u'start_date'], DATETIME_FORMAT[:8])
+        end   = datetime.strptime(form[u'end_date'], DATETIME_FORMAT[:8])
+    except ValueError:
+        return False
     if start > end:
         return False
     return True
@@ -98,14 +101,13 @@ def send_request(record, host):
                              %(host, status, record.md5, descri))
 
     subject = 'Travel Request'
-    body = "Travel Request<br>\
+    base_body = "Travel Request<br>\
             From: %s<br>\
             Departure: %s<br>\
             Destination: %s<br>\
             Start: %s To: %s<br>\
             Working off days: %s<br>\
-            Reason: %s<br><br>\
-            Manager will receive another email to feedback the request<br>"\
+            Reason: %s<br><br>"\
             %(record.requestor_email,
               record.departure,
               record.destination,
@@ -113,21 +115,26 @@ def send_request(record, host):
               record.end_date,
               record.working_days,
               record.reason)
-    feedback = '<br>'.join(feedback_urls)
+
     tos = [entry.email for entry in MailConfig.objects.filter(is_cc=False)]
     ccs = [entry.email for entry in MailConfig.objects.filter(is_cc=True)]
+    feedback = '<br>Once you click the following url:<br>' +\
+            '<br>'.join(feedback_urls) +\
+            '<br> the feedback will be Sent to:<br>'+\
+            record.requestor_email + '<br>' + record.manager_email +\
+            '<br> CC to: <br>'+\
+            '<br>'.join(ccs)
 
     msg = EmailMultiAlternatives(subject=subject,
-                                 from_email=record.requestor_email,
+                                 from_email="hosted-no-reply@redhat.com",
                                  to = tos)
-    msg.attach_alternative(body+feedback, "text/html")
+    msg.attach_alternative(base_body+feedback, "text/html")
     msg.send(fail_silently=False)
 
     tos.append(record.manager_email)
     msg = EmailMultiAlternatives(subject=subject,
                                  from_email=record.requestor_email,
                                  to = tos,
-                                 cc = ccs,
                                  headers={'Cc': ','.join(ccs)})
-    msg.attach_alternative(body, "text/html")
+    msg.attach_alternative(base_body, "text/html")
     msg.send(fail_silently=False)
