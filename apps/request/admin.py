@@ -1,5 +1,5 @@
 from django.contrib import admin
-from travel_request.apps.request.models import Request, MailConfig
+from apps.request.models import Request, MailConfig
 
 class RequestAdmin(admin.ModelAdmin):
     list_display = ('requestor_email',

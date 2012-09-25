@@ -9,7 +9,7 @@ from hashlib import md5
 from datetime import datetime
 
 from settings import HOSTNAME
-from travel_request.apps.request.models import Request, MailConfig, ACTION, DATETIME_FORMAT
+from apps.request.models import Request, MailConfig, ACTION, DATETIME_FORMAT
 
 HTML_TEMPLATE = "<html><head><title>%s</title></head><body>%s</body></html>"
 

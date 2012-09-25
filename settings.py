@@ -134,7 +134,7 @@ INSTALLED_APPS = (
      'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'travel_request.apps.request',
+    'apps.request',
 )
 
 # A sample logging configuration. The only tangible logging

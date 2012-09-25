@@ -5,7 +5,7 @@ from django.views.generic.simple import redirect_to
 from django.contrib import admin
 admin.autodiscover()
 
-from travel_request.apps.request.views import travel_request, feedback
+from apps.request.views import travel_request, feedback
 
 urlpatterns = patterns('',
     # Examples:
