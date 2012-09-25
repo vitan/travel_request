@@ -41,7 +41,7 @@
             }
         }
         function OthersEvent(id){
-            document.getElementById(id+'_other').value="other place";
+            document.getElementById(id+'_other').value="others";
             var select = document.getElementById(id);
             if(select.options[select.selectedIndex].text == 'Others'){
                 document.getElementById(id+'_other').style.display="block";
@@ -51,7 +51,7 @@
             }
         }
         function Redmine(input){
-            if(input.value == "other place"){
+            if(input.value == "others"){
                 input.value = "";
             }
         }
@@ -69,10 +69,13 @@
                 <span class="form-required" id="id_requestor_email_warn" style="display:none">invalid email address! example: example@redhat.com</span>
             </p>
             <p>
-                Your Manager Email <span class="form-required">*</span>
-                <br>
-                <input type="text" name="manager_email" id="id_manager_email" onChange="ValidateEmail(this.id)">
-                <span class="form-required" id="id_manager_email_warn" style="display:none">invalid email address! example: example@redhat.com</span>
+                Your Team<span class="form-required">*</span>
+                 <br>
+                <select id="id_team" name="team">
+                    <option selected="selected" value="HSS">Hosted & Shared Service(HSS)</option>
+                    <option value="OpenShift">OpenShift</option>
+                    <option value="JBOSS">JBOSS</option>
+                </select>
             </p>
             <p>
                 Your Set Out Location <span class="form-required">*</span>
@@ -91,7 +94,7 @@
                     <option value="RH - Westford">RH - Westford</option>
                     <option value="Others">Others</option>
                 </select>
-                <input id="id_departure_other" name="departure_Other" type="text" class="input-dialog" value="other place"  style="width: 200px;" onclick="Redmine(this)"/>
+                <input id="id_departure_other" name="departure_Other" type="text" class="input-dialog" value="others"  style="width: 200px;" onclick="Redmine(this)"/>
             </p>
             <p>
                 Your Destination Location <span class="form-required">*</span>
@@ -110,7 +113,7 @@
                     <option value="RH - Westford">RH - Westford</option>
                     <option value="Others">Others</option>
                 </select> 
-                <input id="id_destination_other" type="text" name="destination_Other" class="input-dialog" value="other place" style="width: 200px;" onclick="Redmine(this)"/>
+                <input id="id_destination_other" type="text" name="destination_Other" class="input-dialog" value="others" style="width: 200px;" onclick="Redmine(this)"/>
             </p>
             <p>
                 Arrived Date <span class="form-required">*</span>
