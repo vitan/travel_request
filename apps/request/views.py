@@ -9,7 +9,7 @@ from hashlib import md5
 from datetime import datetime
 
 from settings import HOSTNAME
-from apps.request.models import Request, MailConfig, ACTION, DATETIME_FORMAT
+from apps.request.models import Team, Request, MailConfig, ACTION, DATETIME_FORMAT
 
 HTML_TEMPLATE = "<html><head><title>%s</title></head><body>%s</body></html>"
 
@@ -24,7 +24,7 @@ def travel_request(request, template_name='request/travel-request.html'):
         if is_valid(form):
             record = Request()
             record.requestor_email    = form[u'requestor_email']
-            record.manager_email      = form[u'manager_email']
+            record.team               = Team.objects.get(name = form[u'team'])
             record.departure          = form[u'departure'].replace("Others", form[u'departure_Other']) 
             record.destination        = form[u'destination'].replace("Others",form[u'destination_Other'])
             record.start_date         = form[u'start_date'] 
@@ -40,7 +40,7 @@ def travel_request(request, template_name='request/travel-request.html'):
             title = "Request Success"
             body  = "your request has been sent to %s at %s<p>\
                     Please check feedback at %s"\
-                    %(record.manager_email,
+                    %(record.team.functional_manager_email,
                       datetime.now().strftime(DATETIME_FORMAT),
                       record.requestor_email)
         else:
@@ -68,7 +68,7 @@ def feedback(request, status, feedback_md5):
         q.save()
         html_title = "Request Feedback"
         html_body  ="%s at %s <font style='color:red'>%s</font> the following request"\
-                %(q.manager_email, q.update_date.strftime(DATETIME_FORMAT), ACTION[status])
+                %(q.team.functional_manager_email, q.update_date.strftime(DATETIME_FORMAT), ACTION[status])
     except ObjectDoesNotExist:
         update_date = Request.objects.get(md5=feedback_md5).update_date
         html_title = "Invalid Url"
@@ -121,20 +121,20 @@ def send_request(record, host):
     feedback = '<br>Once you click the following url:<br>' +\
             '<br>'.join(feedback_urls) +\
             '<br> the feedback will be Sent to:<br>'+\
-            record.requestor_email + '<br>' + record.manager_email +\
+            record.requestor_email + '<br>' + record.team.functional_manager_email +\
             '<br> CC to: <br>'+\
-            '<br>'.join(ccs)
+            '<br>'.join(set(ccs))
 
     msg = EmailMultiAlternatives(subject=subject,
                                  from_email="hosted-no-reply@redhat.com",
-                                 to = tos)
+                                 to = set(tos))
     msg.attach_alternative(base_body+feedback, "text/html")
     msg.send(fail_silently=False)
 
-    tos.append(record.manager_email)
+    tos.append(record.team.functional_manager_email)
     msg = EmailMultiAlternatives(subject=subject,
                                  from_email=record.requestor_email,
-                                 to = tos,
-                                 headers={'Cc': ','.join(ccs)})
+                                 to = set(tos),
+                                 cc = set(ccs),)
     msg.attach_alternative(base_body, "text/html")
     msg.send(fail_silently=False)

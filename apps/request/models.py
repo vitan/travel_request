@@ -10,9 +10,16 @@ STATUS_OPTIONS = ('Processing', 'Approved', 'Postponed', 'Rejected')
 ACTION = {'1': 'Approve', '2': 'Postpone', '3': 'Reject'}
 NODE_STATUS = list(enumerate(STATUS_OPTIONS))
 
+class Team(models.Model):
+    name                     = models.CharField(max_length=255)
+    functional_manager_email = models.EmailField(max_length=255)
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
 class Request(models.Model):
     requestor_email = models.EmailField(max_length=255, null=True, blank=True)
-    manager_email   = models.EmailField(max_length=255, null=True, blank=True)
+    team            = models.ForeignKey('Team')
     departure       = models.CharField(max_length=1024)
     destination     = models.CharField(max_length=1024)
     start_date      = models.DateTimeField()
@@ -24,8 +31,8 @@ class Request(models.Model):
     update_date     = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return "%s requested by %s" % (self.requestor_email,
-                                       self.manager_email)
+        return "request by %s from %s" % (self.requestor_email,
+                                       self.team.name)
 
 class MailConfig(models.Model):
     username     = models.CharField(max_length=255, null=True, blank=True)
@@ -41,7 +48,7 @@ def feedback_handler(sender, **kwargs):
     if obj.status is not 0:
         subject = "Request Feedback"
         feedback  ="%s at %s <font style='color:red'>%s</font> the following request"\
-                %(obj.manager_email,
+                %(obj.team.functional_manager_email,
                   obj.update_date.strftime(DATETIME_FORMAT),
                   ACTION[str(obj.status)])
 
@@ -63,12 +70,12 @@ def feedback_handler(sender, **kwargs):
         tos = [entry.email for entry in MailConfig.objects.filter(is_cc=False)]
         ccs = [entry.email for entry in MailConfig.objects.filter(is_cc=True)]
         tos.append(obj.requestor_email)
-        tos.append(obj.manager_email)
+        tos.append(obj.team.functional_manager_email)
 
         msg = EmailMultiAlternatives(subject=subject,
                                      from_email="hosted-no-reply@redhat.com",
-                                     to=tos,
-                                     headers={'Cc': ','.join(ccs)})
+                                     to=set(tos),
+                                     cc=set(ccs),)
         
         msg.attach_alternative(email_body, "text/html")
         msg.send(fail_silently=False)

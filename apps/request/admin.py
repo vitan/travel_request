@@ -1,9 +1,9 @@
 from django.contrib import admin
-from apps.request.models import Request, MailConfig
+from apps.request.models import Request, Team, MailConfig
 
 class RequestAdmin(admin.ModelAdmin):
     list_display = ('requestor_email',
-                    'manager_email',
+                    'team',
                     'departure',
                     'destination',
                     'start_date',
@@ -14,7 +14,7 @@ class RequestAdmin(admin.ModelAdmin):
                    )
     readonly_fields = ('md5',)
     search_fields  = ['requestor_email',
-                      'manager_email',
+                      'team',
                       'departure',
                       'destination',
                       'working_days',]
@@ -26,6 +26,14 @@ class RequestAdmin(admin.ModelAdmin):
                    'update_date',)
 
 admin.site.register(Request, RequestAdmin)
+
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('name',
+                    'functional_manager_email')
+    search_fields = ['name',
+                     'functional_manager_email',]
+
+admin.site.register(Team, TeamAdmin)
 
 class MailConfigAdmin(admin.ModelAdmin):
     list_display = ('username',
