@@ -5,14 +5,7 @@ import socket
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-try:
-    #HOSTNAME = socket.gethostname()
-    if DEBUG:
-        HOSTNAME = 'http://10.66.3.221:8000/travel_request/'
-    else:
-        HOSTNAME = socket.gethostname()
-except:
-    HOSTNAME = "localhost"
+HOSTNAME = "http://10.66.3.221:8000/travel_request/"
 
 PROJECT_DIR = os.path.dirname(os.path.realpath(__file__))
 

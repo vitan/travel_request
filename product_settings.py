@@ -15,6 +15,8 @@ MANAGERS = ADMINS
 
 ROOT_URLCONF = 'urls'
 
+HOSTNAME = "http://" + socket.gethostname() + "/travel-request/travel_request/"
+
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
