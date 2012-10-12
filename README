@@ -1,22 +1,33 @@
+====================================
 It's a simple app for travel request.
+====================================
+
+:Author:
+    Zhou Weitao (weizhou@redhat.com)
+:Version:
+    1.0 of 2012/10/12
 
 Install
--------------------------------------
-1, set the var PATH in tr-wsgi.py
+-------
+1. set the var PATH in tr-wsgi.py
    PATH = the app's absolute directory
-2, change owner for browser the app database
+2. change owner for browser the app database
    sudo chown -R apache.apache /app/travel_request
-3, set the HOSTNAME in product_settings.py
-   HOSTNAME = "http://" + socket.gethostname() + your url redirect("/travel-request/travel_request/")
-   HOSTNAME = "http://" + socket.gethostname() + "/travel-request/travel_request/"
+3. set the DEPLOY_PROXY_PATH in product_settings.py
+   If app is deployed under a proxied host, please set DEPLOY_PROXY_PATH accordingly.
 
 Tutorial
--------------------------------------
-1) As a requestor, If you fill info into the Travel_Request Form & submit it successfully, your travel request will be sent to your manager. you can receive the related feedback mail when the manager approved, rejected or postponed your request.
+--------
+1. As a requestor, If you fill info into the Travel_Request Form & submit it successfully,
+   your travel request will be sent to your manager. you can receive the related feedback mail
+   when the manager approved, rejected or postponed your request.
 
-2) As a manager, you will receive a related request email after your member have submitted the Travel_Request Form, and you can response your member's request by clicking the url in your email. Once the manager feedbacked the request, the info will be sent to the requestor, functional manager & admin.
+2. As a manager, you will receive a related request email after your member have submitted the
+   Travel_Request Form, and you can response your member's request by clicking the url in your email.
+   Once the manager feedbacked the request, the info will be sent to the requestor, functional manager & admin.
 
-3) As an admin, you will receive request & feedback emails, and you can maniplulate the related request records, config the manager & cc_list mail, and set the functional manager email for each team in the admin page.
+3. As an admin, you will receive request & feedback emails, and you can maniplulate the related
+   request records, config the manager & cc_list mail, and set the functional manager email for
+   each team in the admin page.
 
 Any problems, send mail to weizhou@redhat.com plz.
-2012-09-24

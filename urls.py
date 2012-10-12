@@ -9,7 +9,7 @@ from apps.request.views import travel_request, feedback
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', redirect_to, {'url': '/travel_request/'}),
+    url(r'^$', redirect_to, {'url': 'travel_request/'}),
     url(r'^travel_request/$', travel_request, name='travel_request'),
     url(r'^travel_request/feedback/(\d{1})/([a-z\d]{32})/$', feedback, name='feedback'),
 
